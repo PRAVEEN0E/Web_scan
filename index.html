@@ -31,23 +31,24 @@
     </div>
   </div>
 
-  <script>
-  document.getElementById("loginForm").addEventListener("submit", function(event) {
-      event.preventDefault(); // Prevent page reload
+ <script>
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault();
 
-      let formData = new FormData(this);
+    let formData = new FormData(this);
 
-      fetch("/login", {
-          method: "POST",
-          body: formData
-      })
-      .then(response => response.text())
-      .then(data => {
-          document.getElementById("message").innerHTML = data;
-          document.getElementById("message").style.color = data.includes("Successful") ? "green" : "red";
-      })
-      .catch(error => console.error("Error:", error));
-  });
-  </script>
+    fetch("https://your-flask-app.onrender.com/login", {  // Update with your backend URL
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById("message").innerHTML = data;
+        document.getElementById("message").style.color = data.includes("Successful") ? "green" : "red";
+    })
+    .catch(error => console.error("Error:", error));
+});
+</script>
+
 </body>
 </html>

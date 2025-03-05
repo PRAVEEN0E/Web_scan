@@ -1,0 +1,4 @@
+[[redirects]]
+  from = "/login"
+  to = "/index.html"
+  status = 200

@@ -10,7 +10,7 @@ CREATE TABLE users (
 
 INSERT INTO users (username, password) VALUES
     ('admin', 'password'),
-    ('girija', 'pass1'),
+    ('user1', 'pass1'),
     ('user2', 'pass2'),
     ('user3', 'pass3'),
     ('user4', 'pass4');

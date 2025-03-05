@@ -1,9 +1,9 @@
 import mysql.connector
 from flask import Flask, request, send_file
+import os
 
 app = Flask(__name__)
 
-# MySQL connection parameters
 DB_HOST = 'localhost'
 DB_USER = 'admin'
 DB_PASSWORD = 'Qwertyuiop'
@@ -21,27 +21,25 @@ def get_db():
 
 @app.route('/')
 def index():
-    return send_file("index.html")  # Ensure index.html exists in the same directory
+    return send_file("index.html")
 
 @app.route('/login', methods=['POST'])
 def login():
     username = request.form.get('username')
     password = request.form.get('password')
 
-    # **INTENTIONALLY VULNERABLE SQL QUERY** (DO NOT USE IN PRODUCTION)
-    query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
-    
+    query = "SELECT * FROM users WHERE username = '%s' AND password = '%s'" % (username, password)
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute(query)  # Executing raw SQL (Vulnerable)
+    cursor.execute(query)
     user = cursor.fetchone()
     cursor.close()
     conn.close()
-    
+
     if user:
         return f"Login Successful! Welcome, {username}."
     else:
-        return "Login Failed! Invalid credentials.", 401
+        return "Login Failed! Invalid credentials."
 
 if __name__ == '__main__':
     app.run(debug=True)
